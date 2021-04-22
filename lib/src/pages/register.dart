@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
+
+
+  bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +25,7 @@ class Register extends StatelessWidget {
 
   Widget _body() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -34,11 +43,10 @@ class Register extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20.0,
+                height: 40.0,
               ),
               TextFormField(
-                validator: (value) =>
-                    value.isEmpty ? "Ingrese el nombre" : null,
+                validator: (value) => value.isEmpty ? "Ingrese el nombre" : null,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   labelStyle: TextStyle(color: Colors.grey),
@@ -85,12 +93,20 @@ class Register extends StatelessWidget {
               TextFormField(
                 validator: (value) =>
                     value.isEmpty ? "ingrese una contraseña" : null,
-                obscureText: true,
+                obscureText: hidePassword,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   labelStyle: TextStyle(color: Colors.grey),
                   labelText: "Contraseña",
                   prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: hidePassword ? Icon(Feather.eye) : Icon(Feather.eye_off),
+                    onPressed: (){
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
